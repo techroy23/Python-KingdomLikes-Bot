@@ -31,8 +31,11 @@ if headless.lower() == "true":
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
+    options.add_argument("--disable-logging")
+    options.add_argument("--log-level=3")
 else:
     print("HEADLESS DISABLED")
+    options.add_argument("--log-level=3")
 
 
 driver = webdriver.Chrome(service=EXE, options=options)
