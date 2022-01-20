@@ -3,10 +3,11 @@ Bot for https://kingdomlikes.com that logins into an account and then goes to th
 
 # Prerequisite
 
- 1. Download python at https://www.python.org/downloads/
- 2. Download chromedriver.exe v96.x.xxxx.xx at https://chromedriver.chromium.org/downloads 
- 3. Make sure app.py and chromedriver.exe are both in the same directory.
- 4. run `pip install selenium`
+ 1. Clone this repo
+ 2. Download python at https://www.python.org/downloads/
+ 3. Download chromedriver.exe v96.x.xxxx.xx at https://chromedriver.chromium.org/downloads 
+ 4. Make sure app.py and chromedriver.exe are both in the same directory.
+ 5. run `pip install selenium`
 
 # How to use
 
@@ -15,5 +16,6 @@ Bot for https://kingdomlikes.com that logins into an account and then goes to th
 
 # Headless
 
- - By default the browser window will be hidden. If you want the browser window to show change `headless = "true"` to `headless = "false"`
+ - By default the browser window will be hidden.
+ - If you want the browser window to show change `headless = "true"` to `headless = "false"`
 
