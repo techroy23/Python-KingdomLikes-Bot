@@ -3,8 +3,10 @@ Bot for https://kingdomlikes.com that logins into an account and then goes to th
 
 # Prerequisite
 
- 1. Download python https://www.python.org/downloads/
- 2. run `pip install selenium`
+ 1. Download python at https://www.python.org/downloads/
+ 2. Download chromedriver.exe v96.x.xxxx.xx at https://chromedriver.chromium.org/downloads 
+ 3. Make sure app.py and chromedriver.exe are both in the same directory.
+ 4. run `pip install selenium`
 
 # How to use
 
