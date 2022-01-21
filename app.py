@@ -174,10 +174,8 @@ def link_clicker():
         print()
         print()
         print("Title : " + str(link_title))
-        try:
-            time_length = driver.find_element(By.XPATH, "//*[@id='idpage5']/div/div[5]/h5").text
-        except:
-            time_length = driver.find_element(By.XPATH, "//*[@id='idpage6']/div/div[5]/h5").text
+        time_length = driver.find_element(By.XPATH, "//*[@id='idpage6']/div/div[5]/h5 |\
+ //*[@id='idpage5']/div/div[5]/h5").text
         time_length_split = re.split("[/ :]", time_length)
         time_minutes = int(time_length_split[5])
         time_seconds = int(time_length_split[6])
