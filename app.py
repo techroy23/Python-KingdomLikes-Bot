@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from sys import platform
 import time
 import re
 import config
@@ -12,8 +13,13 @@ print("\nSETTING UP VARIABLE")
 user_n = getattr(config, "username")
 pass_w = getattr(config, "password")
 headless = getattr(config, "headless")
-EXE = Service('./chromedriver.exe')
 options = Options()
+
+
+if platform == "linux" or platform == "linux2":
+    chrm = Service('./chromedriver')
+else:
+    chrm = Service('./chromedriver.exe')
 
 
 print("CHECKING CREDENTIALS")
@@ -38,7 +44,7 @@ else:
     options.add_argument("--log-level=3")
 
 
-driver = webdriver.Chrome(service=EXE, options=options)
+driver = webdriver.Chrome(service=chrm, options=options)
 
 
 def ctimer(t):
@@ -154,7 +160,6 @@ def web_traffic_loop():
 login()
 check_points()
 goto_free_points()
-# web_traffic_loop()
 youtube_loop()
 
 # EXIT
