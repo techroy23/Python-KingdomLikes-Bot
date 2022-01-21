@@ -5,8 +5,8 @@ Bot for https://kingdomlikes.com that logins into your kingdomlikes account then
 
  1. Clone this repo
  2. Download python at https://www.python.org/downloads/
- 3. Download chromedriver.exe v96.x.xxxx.xx at https://chromedriver.chromium.org/downloads 
- 4. Make sure app.py and chromedriver.exe are both in the same directory.
+ 3. Download `chromedriver` v96.x.xxxx.xx at https://chromedriver.chromium.org/downloads 
+ 4. Make sure `app.py` and `chromedriver` are both in the same directory.
  5. run `pip install selenium`
 
 # How to use
