@@ -1,5 +1,5 @@
 # Python-KingdomLikes-Bot
-Bot for https://kingdomlikes.com that logins into an account and then goes to the youtube views section where it opens and watch by itself all the available videos and then switch to web traffic if there is no more available video
+Bot for https://kingdomlikes.com that logins into your kingdomlikes account then will start viewing youtube videos. It will automatically switch to viewing website if it can't find any videos and vice versa.
 
 # Prerequisite
 
