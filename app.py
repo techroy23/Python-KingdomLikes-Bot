@@ -129,7 +129,7 @@ def youtube_loop():
             check_points()
         except:
             print("No Available website to view. Will now wait for 150 seconds then switch to web traffic")
-            time.sleep(150)
+            ctimer(150)
             goto_free_points()
             web_traffic_loop()
         else:
