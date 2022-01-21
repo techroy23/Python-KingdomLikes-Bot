@@ -15,6 +15,9 @@ pass_w = getattr(config, "password")
 headless = getattr(config, "headless")
 options = Options()
 
+switch = 0
+switch_youtube = 1
+switch_website = 1
 
 if platform == "linux" or platform == "linux2":
     chrm = Service('./chromedriver')
@@ -87,80 +90,133 @@ def goto_free_points():
 
 
 def youtube_view():
+    global switch
+    global switch_youtube
+    global switch_website
     print()
     ctimer(5)
     print("NAVIGATING TO PAGE https://kingdomlikes.com/free_points/youtube-views")
     youtube_views = driver.find_element(By.XPATH, "//a[@href='https://kingdomlikes.com/free_points/youtube-views']")
     youtube_views.click()
+    ctimer(5)
+    checker()
+    if switch == 1:
+        print("NO VIDEOS FOUND ...")
+        switch_youtube = 0
+        switch = 0
+        web_traffic_view()
+    else:
+        link_clicker()
 
 
 def web_traffic_view():
+    global switch
+    global switch_youtube
+    global switch_website
     print()
     ctimer(5)
     print("NAVIGATING TO PAGE https://kingdomlikes.com/free_points/web-traffic")
     web_traffics = driver.find_element(By.XPATH, "//a[@href='https://kingdomlikes.com/free_points/web-traffic']")
     web_traffics.click()
+    checker()
+    ctimer(5)
+    if switch == 1:
+        print("NO WEBSITES FOUND ...")
+        switch_website = 0
+        switch = 0
+        youtube_view()
+    else:
+        link_clicker()
+
+
+def checker():
+    global switch
+    global switch_youtube
+    global switch_website
+
+    sysw = switch_youtube + switch_website
+
+    if sysw <= 0:
+        print("Unable to find any videos or website")
+        print("We will now sleep for 5 minutes")
+        ctimer(300)
+        switch_youtube = 1
+        switch_website = 1
+        checker()
+    else:
+        try:
+            print("\nCHECKING")
+            ctimer(5)
+            nothing = re.split("[ ]", driver.find_element(By.XPATH, "//*[@id='idpage5']/div/div[2]/h4").text)
+            nothing1 = str(nothing[0])
+            ctimer(5)
+            if nothing1 == "No":
+                switch = 1
+                return switch
+            else:
+                switch = 0
+                return switch
+        except:
+            switch = 0
+            return switch
 
 
 def link_clicker():
-    print()
-    print("WAITING FOR PAGE TO REFRESH")
-    print()
-    ctimer(10)
-    link_title = driver.find_element(By.XPATH, "//div[@data-token='999999999']").text
-    print()
-    print()
-    print("Title : " + str(link_title))
+    global switch
+    global switch_youtube
+    global switch_website
 
-    time_length = driver.find_element(By.XPATH, "//*[@id='idpage5']/div/div[5]/h5").text
-    time_length_split = re.split("[/ :]", time_length)
-    time_minutes = int(time_length_split[5])
-    time_seconds = int(time_length_split[6])
-    min2sec = time_minutes * 60
-    total_time_length = min2sec + time_seconds
-    print()
-    print("Required time is " + str(time_length_split[5]) + " min and " + str(time_length_split[6]) + " sec.")
-
-    clicker = driver.find_element(By.XPATH, "//button[@class='button blue']")
-    clicker.click()
-    print()
-    ctimer(total_time_length)
-
-
-def youtube_loop():
-    youtube_view()
-    while True:
+    while switch == 0:
+        print()
+        print("WAITING FOR PAGE TO REFRESH")
+        ctimer(5)
+        link_title = driver.find_element(By.XPATH, "//div[@data-token='999999999']").text
+        print()
+        print()
+        print("Title : " + str(link_title))
         try:
-            link_clicker()
-            check_points()
+            time_length = driver.find_element(By.XPATH, "//*[@id='idpage5']/div/div[5]/h5").text
         except:
-            print("No Available website to view. Will now wait for 150 seconds then switch to web traffic")
-            ctimer(150)
-            goto_free_points()
-            web_traffic_loop()
+            time_length = driver.find_element(By.XPATH, "//*[@id='idpage6']/div/div[5]/h5").text
+        time_length_split = re.split("[/ :]", time_length)
+        time_minutes = int(time_length_split[5])
+        time_seconds = int(time_length_split[6])
+        min2sec = time_minutes * 60
+        total_time_length = min2sec + time_seconds
+        print()
+        print("Required time is " + str(time_length_split[5]) + " min and " + str(time_length_split[6]) + " sec.")
+
+        clicker = driver.find_element(By.XPATH, "//button[@class='button blue']")
+        clicker.click()
+        print()
+        ctimer(total_time_length + 5)
+        checker()
+    else:
+        if switch_youtube == 1:
+            switch_youtube = 0
+            switch_website = 1
+            select()
         else:
-            youtube_loop()
+            switch_youtube = 1
+            switch_website = 0
+            select()
 
 
-def web_traffic_loop():
-    web_traffic_view()
-    while True:
-        try:
-            link_clicker()
-            check_points()
-        except:
-            print("No Available website to view. Will now wait for 150 seconds then switch to youtube view")
-            ctimer(150)
-            goto_free_points()
-            youtube_loop()
-        else:
-            web_traffic_loop()
+def select():
+    global switch_youtube
+    global switch_website
+
+    if switch_youtube == 1:
+        youtube_view()
+    else:
+        web_traffic_view()
 
 
 login()
 check_points()
 goto_free_points()
-youtube_loop()
+select()
+
 
 # EXIT
 driver.quit()
