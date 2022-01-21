@@ -8,7 +8,7 @@ import re
 import config
 
 
-print("SETTING UP VARIABLE")
+print("\nSETTING UP VARIABLE")
 user_n = getattr(config, "username")
 pass_w = getattr(config, "password")
 headless = getattr(config, "headless")
@@ -41,48 +41,68 @@ else:
 driver = webdriver.Chrome(service=EXE, options=options)
 
 
+def ctimer(t):
+    while t:
+        mins = t // 60
+        secs = t % 60
+        timer = 'Waiting for {:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+
+
 def login():
+    print()
     print("OPENING WEBSITE https://kingdomlikes.com/")
     driver.get("https://kingdomlikes.com")
 
+    print()
     print("PLEASE WAIT WHILE WE LOGIN")
     username = driver.find_element(By.NAME, "email")
     username.send_keys(str(user_n))
     password = driver.find_element(By.NAME, "password")
     password.send_keys(str(pass_w) + Keys.RETURN)
+    print("DONE")
 
 
 def check_points():
-    time.sleep(5)
+    print()
+    ctimer(5)
     earned_points = driver.find_element(By.XPATH, "//*[@id='divpoints']/h4").text
-    print("\nYou currently have " + earned_points + "\n")
+    print("You currently have " + earned_points + "\n")
 
 
 def goto_free_points():
-    time.sleep(5)
+    print()
+    ctimer(5)
     print("NAVIGATING TO PAGE https://kingdomlikes.com/free_points")
     free_points = driver.find_element(By.XPATH, "//img[@class='icon min sprite sprite-thumb-up120']")
     free_points.click()
 
 
 def youtube_view():
-    time.sleep(5)
+    print()
+    ctimer(5)
     print("NAVIGATING TO PAGE https://kingdomlikes.com/free_points/youtube-views")
     youtube_views = driver.find_element(By.XPATH, "//a[@href='https://kingdomlikes.com/free_points/youtube-views']")
     youtube_views.click()
 
 
 def web_traffic_view():
-    time.sleep(5)
+    print()
+    ctimer(5)
     print("NAVIGATING TO PAGE https://kingdomlikes.com/free_points/web-traffic")
     web_traffics = driver.find_element(By.XPATH, "//a[@href='https://kingdomlikes.com/free_points/web-traffic']")
     web_traffics.click()
 
 
 def link_clicker():
+    print()
     print("WAITING FOR PAGE TO REFRESH")
-    time.sleep(10)
+    print()
+    ctimer(10)
     link_title = driver.find_element(By.XPATH, "//div[@data-token='999999999']").text
+    print()
     print()
     print("Title : " + str(link_title))
 
@@ -94,11 +114,11 @@ def link_clicker():
     total_time_length = min2sec + time_seconds
     print()
     print("Required time is " + str(time_length_split[5]) + " min and " + str(time_length_split[6]) + " sec.")
-    print("Waiting for " + str(total_time_length) + " seconds")
 
     clicker = driver.find_element(By.XPATH, "//button[@class='button blue']")
     clicker.click()
-    time.sleep(total_time_length)
+    print()
+    ctimer(total_time_length)
 
 
 def youtube_loop():
@@ -124,7 +144,7 @@ def web_traffic_loop():
             check_points()
         except:
             print("No Available website to view. Will now wait for 150 seconds then switch to youtube view")
-            time.sleep(150)
+            ctimer(150)
             goto_free_points()
             youtube_loop()
         else:
